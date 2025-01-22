@@ -1,0 +1,13 @@
+use_frameworks!
+
+platform :ios, '10.0'
+
+target 'TKStackCard_Example' do
+  pod 'TKStackCard', :path => '../'
+
+  target 'TKStackCard_Tests' do
+    inherit! :search_paths
+
+    pod 'FBSnapshotTestCase'
+  end
+end
