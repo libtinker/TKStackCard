@@ -25,21 +25,22 @@ TKStackCard 是一个支持卡片叠层效果的自定义 UI 组件，用于展�
 
 ## Example
 
-1、初始化视图
+
 ```
+1、初始化视图
+- (void)setupUI {
     _stackCardView = [[TKStackCardView alloc]
-        initWithFrame:CGRectMake(20, 100, self.view.bounds.size.width - 40,
-                                 172)];
+        initWithFrame:CGRectMake(20, 100, self.view.bounds.size.width - 40,172)];
     _stackCardView.dataSource = self;
     _stackCardView.delegate = self;
     [_stackCardView reloadData];
     [self.view addSubview:_stackCardView];
-```
+}
+
 2、实现代理
-、、、
+
 
 //MARK: - StackCardViewDataSource
-
 - (void)stackCardView:(TKStackCardView *)stackCardView configureCell:(TKStackCardCell *)cell forIndex:(NSInteger)index {
     if (cell.contentView == nil) {
         //在这里自定义视图
@@ -60,9 +61,7 @@ TKStackCard 是一个支持卡片叠层效果的自定义 UI 组件，用于展�
 
 - (NSInteger)numberOfItemsInStackCardView:(TKStackCardView *)stackCardView {
     return _dataArray.count;
-
 }
-
 、、、
 
 ## Requirements
