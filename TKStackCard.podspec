@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'TKStackCard'
-  s.version          = '0.1.0'
+  s.version          = '0.1.1'
   s.summary          = 'TKStackCard 是一个基于卡片叠层的自定义 UI 组件，用于展示多张卡片，支持滑动、点击、动态更新等交互操作。它适合需要以卡片形式展示信息的场景'
 
 # This description is used to generate tags and improve search results.
