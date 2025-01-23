@@ -33,6 +33,7 @@ TKStackCard 是一个支持卡片叠层效果的自定义 UI 组件，用于展�
     [self.view addSubview:_stackCardView];
 ```
 2、实现代理
+、、、
 //MARK: - StackCardViewDataSource
 
 - (void)stackCardView:(TKStackCardView *)stackCardView configureCell:(TKStackCardCell *)cell forIndex:(NSInteger)index {
@@ -57,7 +58,7 @@ TKStackCard 是一个支持卡片叠层效果的自定义 UI 组件，用于展�
     return _dataArray.count;
 
 }
-
+、、、
 ## Requirements
 
 ## Installation
