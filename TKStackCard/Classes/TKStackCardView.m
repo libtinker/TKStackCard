@@ -282,27 +282,54 @@
         return;
     }
 
-    // 2. 更新当前索引
-    self.currentIndex = index;
+    // 如果当前的下标等于要跳转的下标，不执行动画
+    if (self.currentIndex == index) {
+        return;
+    }
 
-    // 3. 根据是否需要动画，调整视图
+    // 2. 根据是否需要动画，调整视图
     if (animated) {
         self.userInteractionEnabled = NO;
-        [UIView animateWithDuration:0.3
+        [UIView animateWithDuration:0.2
             delay:0
-            usingSpringWithDamping:0.7
-            initialSpringVelocity:1.0
             options:UIViewAnimationOptionCurveEaseInOut
             animations:^{
-              [self reloadViews];
+            if (index<self.currentIndex) {//右滑
+
+
+                TKStackCardCell *toCell = (TKStackCardCell *)self->_cacheViews[0];
+                [self.dataSource stackCardView:self
+                                 configureCell:toCell
+                                      forIndex:index];
+                toCell.frame = self->_cacheViews[1].frame;
+            }else {
+                      
+                if (self->_cacheViews.count>2) {
+                    TKStackCardCell *toCell = (TKStackCardCell *)self->_cacheViews[2];
+                    [self.dataSource stackCardView:self
+                                     configureCell:toCell
+                                          forIndex:index];
+                }
+                TKStackCardCell *currentCell = (TKStackCardCell *)self->_cacheViews[1];
+                currentCell.frame = self->_cacheViews[0].frame;
+           
             }
-            completion:^(BOOL finished) {
-              self.userInteractionEnabled = YES;
-            }];
+                             
+                         }
+                         completion:^(BOOL finished) {
+            if (finished) {
+                self.currentIndex = index;
+                [self reloadViews]; // 确保最终状态刷新到位
+                self.userInteractionEnabled = YES;
+            }
+                        
+                         }];
     } else {
+        self.currentIndex = index;
         [self reloadViews];
     }
 }
+
 
 - (void)reloadData {
 
