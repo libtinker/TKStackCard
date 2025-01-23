@@ -62,7 +62,7 @@ TKStackCard 是一个支持卡片叠层效果的自定义 UI 组件，用于展�
 - (NSInteger)numberOfItemsInStackCardView:(TKStackCardView *)stackCardView {
     return _dataArray.count;
 }
-、、、
+```
 
 ## Requirements
 
@@ -71,7 +71,7 @@ TKStackCard 是一个支持卡片叠层效果的自定义 UI 组件，用于展�
 TKStackCard is available through [CocoaPods](https://cocoapods.org). To install
 it, simply add the following line to your Podfile:
 
-```ruby
+```
 pod 'TKStackCard'
 ```
 
