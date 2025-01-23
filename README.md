@@ -1,6 +1,7 @@
 # TKStackCard
 TKStackCard 是一个支持卡片叠层效果的自定义 UI 组件，用于展示多个卡片视图，并提供滑动切换、层叠动画和交互事件等功能。它适合在 App 中实现类似堆叠式卡片浏览或内容筛选的效果，常见于图片浏览、商品推荐、任务管理等场景。
-![a](https://github.com/user-attachments/assets/a415cd0b-7421-4957-8fd7-9213f3243ca2)
+<img width="320" alt="image" src="https://github.com/user-attachments/assets/85885afa-7b4b-41b9-8284-cdc626f6d5bb" />
+
 
 主要特点
 ```
