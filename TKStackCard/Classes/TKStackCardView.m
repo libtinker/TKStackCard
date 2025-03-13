@@ -44,7 +44,8 @@
     [_cacheViews removeAllObjects];
     NSInteger viewCount = _stackCount + 1; // 多创建一个用于滑动的视图
     for (NSInteger i = 0; i < viewCount; i++) {
-        TKStackCardCell *cell = [[TKStackCardCell alloc] initWithFrame:CGRectZero];
+        TKStackCardCell *cell =
+            [[TKStackCardCell alloc] initWithFrame:CGRectZero];
         cell.layer.cornerRadius = 10.0;
         cell.clipsToBounds = YES;
         cell.frame = [self getFrameWithIndex:i];
@@ -58,9 +59,11 @@
                              configureCell:cell
                                   forIndex:_dataSourceCount - 1];
         } else {
+            NSInteger index = i - 1;
+            index = index % [self.dataSource numberOfItemsInStackCardView:self];
             [self.dataSource stackCardView:self
                              configureCell:cell
-                                  forIndex:i - 1];
+                                  forIndex:index];
         }
         // 给顶部卡片添加拖拽手势
         if (i == 1) {
@@ -261,17 +264,12 @@
             index = _currentIndex; // 顶部卡片索引
         } else {
             index = _currentIndex + i - 1; // 中间卡片索引
-            if (index >= _dataSourceCount) {
-                index = index % _dataSourceCount;
-            }
         }
-        if (self.dataSource && [self.dataSource respondsToSelector:@selector
-                                                (stackCardView:
-                                                    configureCell:forIndex:)]) {
-            [self.dataSource stackCardView:self
-                             configureCell:cell
-                                  forIndex:index];
+
+        if (index >= _dataSourceCount) {
+            index = index % _dataSourceCount;
         }
+        [self.dataSource stackCardView:self configureCell:cell forIndex:index];
     }
 }
 
@@ -294,42 +292,41 @@
             delay:0
             options:UIViewAnimationOptionCurveEaseInOut
             animations:^{
-            if (index<self.currentIndex) {//右滑
+              if (index < self.currentIndex) { // 右滑
 
+                  TKStackCardCell *toCell =
+                      (TKStackCardCell *)self->_cacheViews[0];
 
-                TKStackCardCell *toCell = (TKStackCardCell *)self->_cacheViews[0];
-                [self.dataSource stackCardView:self
-                                 configureCell:toCell
-                                      forIndex:index];
-                toCell.frame = self->_cacheViews[1].frame;
-            }else {
-                      
-                if (self->_cacheViews.count>2) {
-                    TKStackCardCell *toCell = (TKStackCardCell *)self->_cacheViews[2];
-                    [self.dataSource stackCardView:self
-                                     configureCell:toCell
-                                          forIndex:index];
-                }
-                TKStackCardCell *currentCell = (TKStackCardCell *)self->_cacheViews[1];
-                currentCell.frame = self->_cacheViews[0].frame;
-           
+                  [self.dataSource stackCardView:self
+                                   configureCell:toCell
+                                        forIndex:index];
+                  toCell.frame = self->_cacheViews[1].frame;
+              } else {
+
+                  if (self->_cacheViews.count > 2) {
+                      TKStackCardCell *toCell =
+                          (TKStackCardCell *)self->_cacheViews[2];
+                      [self.dataSource stackCardView:self
+                                       configureCell:toCell
+                                            forIndex:index];
+                  }
+                  TKStackCardCell *currentCell =
+                      (TKStackCardCell *)self->_cacheViews[1];
+                  currentCell.frame = self->_cacheViews[0].frame;
+              }
             }
-                             
-                         }
-                         completion:^(BOOL finished) {
-            if (finished) {
-                self.currentIndex = index;
-                [self reloadViews]; // 确保最终状态刷新到位
-                self.userInteractionEnabled = YES;
-            }
-                        
-                         }];
+            completion:^(BOOL finished) {
+              if (finished) {
+                  self.currentIndex = index;
+                  [self reloadViews]; // 确保最终状态刷新到位
+                  self.userInteractionEnabled = YES;
+              }
+            }];
     } else {
         self.currentIndex = index;
         [self reloadViews];
     }
 }
-
 
 - (void)reloadData {
 
